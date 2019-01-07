@@ -6,4 +6,5 @@ jobs:
         version: every
       - get: pipeline-repo
       - task: run-unit-tests
+        privileged: true
         file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
