@@ -7,5 +7,8 @@ set -x
 
 export GOPATH=$(pwd)/go
 
+source pipeline-repo/scripts/docker.sh
+start_docker
+
 cd lifecycle-repo
-go test -v ./...
+go test -v -count=1 -parallel=1 ./...
