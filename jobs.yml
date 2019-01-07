@@ -1,0 +1,9 @@
+jobs:
+  - name: unit
+    plan:
+      - get: lifecycle-repo
+        trigger: true
+        version: every
+      - get: pipeline-repo
+      - task: run-unit-tests
+        file: pipeline-repo/tasks/run-lifecyle-unit/task.yml

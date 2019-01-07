@@ -1,0 +1,15 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: golang
+
+inputs:
+  - name: lifecycle-repo
+  - name: pipeline-repo
+
+run:
+  path: pipeline-repo/tasks/run-lifecycle-unit/run
+
+caches:
+  - path: gopath

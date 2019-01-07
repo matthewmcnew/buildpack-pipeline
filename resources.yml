@@ -1,0 +1,13 @@
+---
+resources:
+  - name: lifecycle-repo
+    type: git
+    source:
+      uri: https://github.com/buildpack/lifecycle.git
+      branch: master
+
+  - name: pipeline-repo
+    type: git
+    source:
+      uri: https://github.com/matthewmcnew/buildpack-pipeline.git
+      branch: master

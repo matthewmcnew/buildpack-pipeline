@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+set -x
+
+export GOPATH=$(pwd)/go
+
+cd lifecycle-repo
+go test -v ./...
