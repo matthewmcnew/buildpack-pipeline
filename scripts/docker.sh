@@ -65,15 +65,7 @@ start_docker() {
   local server_args="--mtu ${mtu}"
   local registry=""
 
-  server_args="${server_args} --max-concurrent-downloads=$1 --max-concurrent-uploads=$2"
-
-  for registry in $3; do
-    server_args="${server_args} --insecure-registry ${registry}"
-  done
-
-  if [ -n "$4" ]; then
-    server_args="${server_args} --registry-mirror $4"
-  fi
+  server_args="${server_args} --max-concurrent-downloads=3 --max-concurrent-uploads=3"
 
   try_start() {
     dockerd --data-root /scratch/docker ${server_args} >$LOG_FILE 2>&1 &
