@@ -6,4 +6,4 @@ jobs:
         version: every
       - get: pipeline-repo
       - task: run-unit-tests
-        file: pipeline-repo/tasks/run-lifecyle-unit/task.yml
+        file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
