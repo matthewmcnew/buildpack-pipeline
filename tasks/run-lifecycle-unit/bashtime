@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+source pipeline-repo/scripts/docker.sh
+start_docker
+
+docker container ls
+
+cd lifecycle-repo
+go test -v -count=1 -parallel=1 ./...

@@ -1,14 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 set -o errexit
-set -o nounset
 set -o pipefail
 set -x
 
 export GOPATH=$(pwd)/go
 
-source pipeline-repo/scripts/docker.sh
-start_docker
+apk --no-cache add \
+      bash \
+      docker \
+      jq \
+      ca-certificates \
+      xz
 
-cd lifecycle-repo
-go test -v -count=1 -parallel=1 ./...
+./pipeline-repo/tasks/run-lifecycle-unit/bashtime
