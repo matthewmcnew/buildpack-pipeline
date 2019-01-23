@@ -1,0 +1,35 @@
+---
+resources:
+  - name: code
+    type: git
+    source:
+      uri: https://github.com/buildpack/pack
+
+jobs:
+  - name: test
+    plan:
+      - aggregate:
+          - get: code
+            params: {depth: 1}
+            trigger: true
+      - task: pack build
+        privileged: true
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: concourse/docker-image-resource
+          inputs:
+            - name: code
+          run:
+            path: sh
+            args:
+              - -exc
+              - |
+                source /opt/resource/common.sh
+                start_docker
+
+                docker run -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd)/code:/workspace -w=/workspace golang go run cmd/pack/main.go build inside -p /workspace/acceptance/testdata/node_app/
+
+                docker image ls
