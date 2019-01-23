@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
+source pipeline-repo/scripts/common.sh
+
 set -o errexit
 set -o nounset
 set -o pipefail
+
 set -x
 
-export GOPATH=$(pwd)/go
-
-source pipeline-repo/scripts/docker.sh
-start_docker
-
 cd lifecycle-repo
-go test -v -count=1 -parallel=1 ./...
+
+docker_run golang go test -v -count=1 -parallel=1 ./...

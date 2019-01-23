@@ -2,7 +2,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: golang
+    repository: concourse/docker-image-resource
 
 inputs:
   - name: lifecycle-repo
@@ -10,6 +10,3 @@ inputs:
 
 run:
   path: pipeline-repo/tasks/run-lifecycle-unit/run
-
-caches:
-  - path: gopath

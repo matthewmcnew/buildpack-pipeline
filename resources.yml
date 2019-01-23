@@ -10,4 +10,4 @@ resources:
     type: git
     source:
       uri: https://github.com/matthewmcnew/buildpack-pipeline.git
-      branch: master
+      branch: poc
