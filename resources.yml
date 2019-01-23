@@ -6,6 +6,12 @@ resources:
       uri: https://github.com/buildpack/lifecycle.git
       branch: master
 
+  - name: pack-repo
+    type: git
+    source:
+      uri: https://github.com/buildpack/pack.git
+      branch: master
+
   - name: pipeline-repo
     type: git
     source:

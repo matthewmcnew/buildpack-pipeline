@@ -1,5 +1,5 @@
 jobs:
-  - name: unit
+  - name: lifecycle-unit
     plan:
       - get: lifecycle-repo
         trigger: true
@@ -8,3 +8,13 @@ jobs:
       - task: run-unit-tests
         privileged: true
         file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
+
+  - name: lifecycle-unit
+    plan:
+      - get: pack-repo
+        trigger: true
+        version: every
+      - get: pipeline-repo
+      - task: run-unit-tests
+        privileged: true
+        file: pipeline-repo/tasks/run-pack-unit/task.yml
