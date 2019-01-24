@@ -12,37 +12,40 @@ jobs:
         - task: build-lifecycle
           privileged: true
           file: pipeline-repo/tasks/lifecycle-build/task.yml
-      - put: packs-base-image
-        params:
-          import_file: built-lifecycle-images/base.tar
-      - put: packs-run-image
-        params:
-          import_file: built-lifecycle-images/run.tar
-      - put: packs-build-image
-        params:
-          import_file: built-lifecycle-images/build.tar
-      - put: packs-samples-image
-        params:
-          import_file: built-lifecycle-images/samples.tar
+      - aggregate:
+        - put: packs-base-image
+          params:
+            import_file: built-lifecycle-images/base.tar
+        - put: packs-run-image
+          params:
+            import_file: built-lifecycle-images/run.tar
+        - put: packs-build-image
+          params:
+            import_file: built-lifecycle-images/build.tar
+        - put: packs-samples-image
+          params:
+            import_file: built-lifecycle-images/samples.tar
 
   - name: pack-unit
     plan:
-      - get: pack-repo
-        trigger: true
-        version: every
-      - get: pipeline-repo
+      - aggregate:
+        - get: pack-repo
+          trigger: true
+          version: every
+        - get: pipeline-repo
       - task: run-unit-tests
         privileged: true
         file: pipeline-repo/tasks/run-pack-unit/task.yml
 
   - name: acceptance
     plan:
-      - get: pack-repo
-      - get: pipeline-repo
-      - get: packs-samples-image
-        passed: [lifecycle-unit]
-        trigger: true
-        params: {save: true}
+      - aggregate:
+        - get: pack-repo
+        - get: pipeline-repo
+        - get: packs-samples-image
+          passed: [lifecycle-unit]
+          trigger: true
+          params: {save: true}
       - task: acceptance
         privileged: true
         file: pipeline-repo/tasks/run-acceptance/task.yml
