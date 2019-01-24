@@ -8,6 +8,8 @@ inputs:
   - name: pack-repo
   - name: pipeline-repo
   - name: packs-samples-image
+  - name: packs-build-image
+  - name: packs-run-image
 
 run:
   path: pipeline-repo/tasks/run-acceptance/run
