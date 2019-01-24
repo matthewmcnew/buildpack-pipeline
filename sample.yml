@@ -46,4 +46,45 @@ resources:
       username: _json_key
       password: ((concourse-service-account-key-json))
 
-# keep a new line at the end of this file :)
+  # keep a new line at the end of this file :)jobs:
+  - name: lifecycle-unit
+    plan:
+      - get: lifecycle-repo
+        trigger: true
+        version: every
+      - get: pipeline-repo
+      - task: run-unit-tests
+        privileged: true
+        file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
+      - put: packs-base
+        params:
+          import_file: packs-build/built-lifecyle-images/base.tar
+      - put: packs-run
+        params:
+          import_file: packs-build/built-lifecyle-images/run.tar
+      - put: packs-build
+        params:
+          import_file: packs-build/built-lifecyle-images/build.tar
+      - put: packs-samples
+        params:
+          import_file: packs-build/built-lifecyle-images/samples.tar
+
+  - name: pack-unit
+    plan:
+      - get: pack-repo
+        trigger: true
+        version: every
+      - get: pipeline-repo
+      - task: run-unit-tests
+        privileged: true
+        file: pipeline-repo/tasks/run-pack-unit/task.yml
+
+  - name: acceptance
+    plan:
+      - get: pack-repo
+      - get: pipeline-repo
+      - get: packs-samples
+        passed: [lifecycle-unit]
+      - task: acceptance
+        privileged: true
+        file: pipeline-repo/tasks/run-acceptance/task.yml

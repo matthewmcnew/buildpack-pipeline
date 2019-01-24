@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source pipeline-repo/scripts/common.sh
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+set -x
+
+cd lifecycle-repo
+
+images/bin/build
+
+mkdir -p built-lifecyle-images
+docker save packs/base > built-lifecyle-images/base.tar
+docker save packs/run > built-lifecyle-images/run.tar
+docker save packs/build > built-lifecyle-images/build.tar
+docker save packs/samples > built-lifecyle-images/samples.tar
