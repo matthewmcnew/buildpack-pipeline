@@ -12,6 +12,8 @@ cd lifecycle-repo
 
 images/bin/build
 
+cd ..
+
 docker save packs/base -o built-lifecycle-images/base.tar
 docker save packs/run -o built-lifecycle-images/run.tar
 docker save packs/build -o built-lifecycle-images/build.tar
