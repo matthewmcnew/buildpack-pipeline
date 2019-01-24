@@ -5,21 +5,25 @@ jobs:
         trigger: true
         version: every
       - get: pipeline-repo
-      - task: run-unit-tests
-        privileged: true
-        file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
+      - aggregate:
+        - task: run-unit-tests
+          privileged: true
+          file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
+        - task: build-lifecycle
+          privileged: true
+          file: pipeline-repo/tasks/lifecycle-build/task.yml
       - put: packs-base-image
         params:
-          import_file: packs-build/built-lifecyle-images/base.tar
+          import_file: built-lifecycle-images/base.tar
       - put: packs-run-image
         params:
-          import_file: packs-build/built-lifecyle-images/run.tar
+          import_file: built-lifecycle-images/run.tar
       - put: packs-build-image
         params:
-          import_file: packs-build/built-lifecyle-images/build.tar
+          import_file: built-lifecycle-images/build.tar
       - put: packs-samples-image
         params:
-          import_file: packs-build/built-lifecyle-images/samples.tar
+          import_file: built-lifecycle-images/samples.tar
 
   - name: pack-unit
     plan:
@@ -37,6 +41,8 @@ jobs:
       - get: pipeline-repo
       - get: packs-samples-image
         passed: [lifecycle-unit]
+        trigger: true
+        params: {save: true}
       - task: acceptance
         privileged: true
         file: pipeline-repo/tasks/run-acceptance/task.yml

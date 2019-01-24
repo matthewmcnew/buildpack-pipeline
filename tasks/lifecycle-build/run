@@ -12,8 +12,7 @@ cd lifecycle-repo
 
 images/bin/build
 
-mkdir -p built-lifecyle-images
-docker save packs/base > built-lifecyle-images/base.tar
-docker save packs/run > built-lifecyle-images/run.tar
-docker save packs/build > built-lifecyle-images/build.tar
-docker save packs/samples > built-lifecyle-images/samples.tar
+docker save packs/base -o built-lifecycle-images/base.tar
+docker save packs/run -o built-lifecycle-images/run.tar
+docker save packs/build -o built-lifecycle-images/build.tar
+docker save packs/samples -o built-lifecycle-images/samples.tar

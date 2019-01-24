@@ -58,16 +58,16 @@ resources:
         file: pipeline-repo/tasks/run-lifecycle-unit/task.yml
       - put: packs-base
         params:
-          import_file: packs-build/built-lifecyle-images/base.tar
+          import_file: packs-build/built-lifecycle-images/base.tar
       - put: packs-run
         params:
-          import_file: packs-build/built-lifecyle-images/run.tar
+          import_file: packs-build/built-lifecycle-images/run.tar
       - put: packs-build
         params:
-          import_file: packs-build/built-lifecyle-images/build.tar
+          import_file: packs-build/built-lifecycle-images/build.tar
       - put: packs-samples
         params:
-          import_file: packs-build/built-lifecyle-images/samples.tar
+          import_file: packs-build/built-lifecycle-images/samples.tar
 
   - name: pack-unit
     plan:

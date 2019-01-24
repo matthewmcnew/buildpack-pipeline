@@ -9,8 +9,7 @@ inputs:
   - name: pipeline-repo
 
 outputs:
-  - name: built-lifecyle-images
-
+  - name: built-lifecycle-images
 
 run:
   path: pipeline-repo/tasks/lifecycle-build/run
