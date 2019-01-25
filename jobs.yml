@@ -15,16 +15,20 @@ jobs:
       - aggregate:
         - put: packs-base-image
           params:
-            import_file: built-lifecycle-images/base.tar
+            load_file: built-lifecycle-images/base.tar
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-base # port needed for private repos
         - put: packs-run-image
           params:
-            import_file: built-lifecycle-images/run.tar
+            load_file: built-lifecycle-images/run.tar
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-run # port needed for private repos
         - put: packs-build-image
           params:
-            import_file: built-lifecycle-images/build.tar
+            load_file: built-lifecycle-images/build.tar
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-build # port needed for private repos
         - put: packs-samples-image
           params:
-            import_file: built-lifecycle-images/samples.tar
+            load_file: built-lifecycle-images/samples.tar
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-samples # port needed for private repos
 
   - name: pack-unit
     plan:
