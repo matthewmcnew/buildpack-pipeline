@@ -13,7 +13,7 @@ version=$(cat ./lifecycle-image-version/version)
 
 for image in base run build samples; do
   docker tag "packs/$image:$version" "gcr.io:443/cf-build-service-dev-219913/packs/$image:$version"
-  docker save "gcr.io:443/cf-build-service-dev-219913/packs/$image:$version" -o built-lifecycle-images/base.tar
+  docker save "gcr.io:443/cf-build-service-dev-219913/packs/$image:$version" -o "built-lifecycle-images/$image.tar"
 done
 
 cp ./lifecycle-image-version/version built-lifecycle-images/tag
