@@ -7,7 +7,6 @@ image_resource:
 inputs:
   - name: lifecycle-repo
   - name: pipeline-repo
-  - name: lifecycle-image-version
 
 outputs:
   - name: built-lifecycle-images

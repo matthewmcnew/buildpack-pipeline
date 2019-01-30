@@ -7,13 +7,8 @@ set -o nounset
 set -o pipefail
 
 set -x
-version=$(cat ./lifecycle-image-version/version)
-
-./lifecycle-repo/images/bin/build -v "$version"
+./lifecycle-repo/images/bin/build -v "latest"
 
 for image in base run build samples; do
-  docker tag "packs/$image:$version" "gcr.io:443/cf-build-service-dev-219913/packs/$image:$version"
-  docker save "gcr.io:443/cf-build-service-dev-219913/packs/$image:$version" -o "built-lifecycle-images/$image.tar"
+  docker save "packs/$image" -o "built-lifecycle-images/$image.tar"
 done
-
-cp ./lifecycle-image-version/version built-lifecycle-images/tag
