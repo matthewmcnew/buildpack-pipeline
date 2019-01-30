@@ -36,6 +36,9 @@ jobs:
             load_file: built-lifecycle-images/samples.tar
             load_repository: gcr.io:443/cf-build-service-dev-219913/packs/samples # port needed for private repos
             tag_file: built-lifecycle-images/tag
+      - put:  lifecycle-image-version
+        params:
+          file: lifecycle-image-version/version
 
   - name: pack-unit
     plan:

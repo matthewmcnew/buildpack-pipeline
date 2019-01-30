@@ -16,4 +16,4 @@ for image in base run build samples; do
   docker save "gcr.io:443/cf-build-service-dev-219913/packs/$image:$version" -o built-lifecycle-images/base.tar
 done
 
-cp ./lifecycle-image-version/version built-lifecycle-image/tag
+cp ./lifecycle-image-version/version built-lifecycle-images/tag
