@@ -6,6 +6,15 @@ resources:
       uri: https://github.com/buildpack/lifecycle.git
       branch: master
 
+  - name: lifecycle-image-version
+    type: semver
+    source:
+      initial_version: 3.0.0
+      driver: gcs
+      bucket: buildpack-v3-lifecycle
+      key: version
+      json_key: ((concourse-service-account-key-json))
+
   - name: pack-repo
     type: git
     source:
@@ -21,28 +30,28 @@ resources:
   - name: packs-base-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs-base # port needed for private repos
+      repository: gcr.io:443/cf-build-service-dev-219913/packs/base # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 
   - name: packs-run-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs-run # port needed for private repos
+      repository: gcr.io:443/cf-build-service-dev-219913/packs/run # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 
   - name: packs-build-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs-build # port needed for private repos
+      repository: gcr.io:443/cf-build-service-dev-219913/packs/build # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 
   - name: packs-samples-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs-samples # port needed for private repos
+      repository: gcr.io:443/cf-build-service-dev-219913/packs/samples # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 

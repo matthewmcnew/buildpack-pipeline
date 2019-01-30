@@ -1,10 +1,13 @@
 jobs:
-  - name: lifecycle-unit
+  - name: lifecycle-build
     plan:
       - get: lifecycle-repo
         trigger: true
         version: every
       - get: pipeline-repo
+      - get: lifecycle-image-version
+        params:
+          pre: rc
       - aggregate:
         - task: run-unit-tests
           privileged: true
@@ -16,19 +19,23 @@ jobs:
         - put: packs-base-image
           params:
             load_file: built-lifecycle-images/base.tar
-            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-base # port needed for private repos
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs/base # port needed for private repos
+            tag_file: built-lifecycle-images/tag
         - put: packs-run-image
           params:
             load_file: built-lifecycle-images/run.tar
-            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-run # port needed for private repos
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs/run # port needed for private repos
+            tag_file: built-lifecycle-images/tag
         - put: packs-build-image
           params:
             load_file: built-lifecycle-images/build.tar
-            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-build # port needed for private repos
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs/build # port needed for private repos
+            tag_file: built-lifecycle-images/tag
         - put: packs-samples-image
           params:
             load_file: built-lifecycle-images/samples.tar
-            load_repository: gcr.io:443/cf-build-service-dev-219913/packs-samples # port needed for private repos
+            load_repository: gcr.io:443/cf-build-service-dev-219913/packs/samples # port needed for private repos
+            tag_file: built-lifecycle-images/tag
 
   - name: pack-unit
     plan:
@@ -47,13 +54,13 @@ jobs:
         - get: pack-repo
         - get: pipeline-repo
         - get: packs-build-image
-          passed: [lifecycle-unit]
+          passed: [lifecycle-build]
           params: {save: true}
         - get: packs-run-image
-          passed: [lifecycle-unit]
+          passed: [lifecycle-build]
           params: {save: true}
         - get: packs-samples-image
-          passed: [lifecycle-unit]
+          passed: [lifecycle-build]
           trigger: true
           params: {save: true}
       - task: acceptance
