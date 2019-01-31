@@ -4,7 +4,7 @@ resources:
     type: git
     source:
       uri: https://github.com/buildpack/lifecycle.git
-      branch: master
+      branch: build-mod-vendor
 
   - name: lifecycle-image-version
     type: semver
