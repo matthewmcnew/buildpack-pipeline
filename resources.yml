@@ -15,7 +15,14 @@ resources:
       key: version
       json_key: ((concourse-service-account-key-json))
 
-  - name: pack-repo
+  - name: pack-repo-released
+    type: git
+    source:
+      uri: https://github.com/buildpack/pack.git
+      branch: master
+      tag_filter: v*
+
+  - name: pack-repo-edge
     type: git
     source:
       uri: https://github.com/buildpack/pack.git
