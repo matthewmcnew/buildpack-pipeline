@@ -15,14 +15,7 @@ resources:
       key: version
       json_key: ((concourse-service-account-key-json))
 
-  - name: pack-repo-released
-    type: git
-    source:
-      uri: https://github.com/buildpack/pack.git
-      branch: master
-      tag_filter: v*
-
-  - name: pack-repo-edge
+  - name: pack-repo
     type: git
     source:
       uri: https://github.com/buildpack/pack.git
@@ -37,28 +30,28 @@ resources:
   - name: packs-base-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs/base # port needed for private repos
+      repository: gcr.io:443/cncf-buildpacks-ci/packs/base # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 
   - name: packs-run-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs/run # port needed for private repos
+      repository: gcr.io:443/cncf-buildpacks-ci/packs/run # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 
   - name: packs-build-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs/build # port needed for private repos
+      repository: gcr.io:443/cncf-buildpacks-ci/packs/build # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 
   - name: packs-samples-image
     type: docker-image
     source:
-      repository: gcr.io:443/cf-build-service-dev-219913/packs/samples # port needed for private repos
+      repository: gcr.io:443/cncf-buildpacks-ci/packs/samples # port needed for private repos
       username: _json_key
       password: ((concourse-service-account-key-json))
 

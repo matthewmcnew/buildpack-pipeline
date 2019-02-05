@@ -20,21 +20,25 @@ jobs:
           params:
             load_file: built-lifecycle-images/base.tar
             load_repository: packs/base # port needed for private repos
+            load_tag: dev
             tag_file: lifecycle-image-version/version
         - put: packs-run-image
           params:
             load_file: built-lifecycle-images/run.tar
             load_repository: packs/run # port needed for private repos
+            load_tag: dev
             tag_file: lifecycle-image-version/version
         - put: packs-build-image
           params:
             load_file: built-lifecycle-images/build.tar
             load_repository: packs/build # port needed for private repos
+            load_tag: dev
             tag_file: lifecycle-image-version/version
         - put: packs-samples-image
           params:
             load_file: built-lifecycle-images/samples.tar
             load_repository: packs/samples # port needed for private repos
+            load_tag: dev
             tag_file: lifecycle-image-version/version
       - put:  lifecycle-image-version
         params:
@@ -44,7 +48,7 @@ jobs:
     plan:
       - aggregate:
         - get: pack-repo
-          resource: pack-repo-edge
+          resource: pack-repo
           trigger: true
           version: every
         - get: pipeline-repo
@@ -56,7 +60,7 @@ jobs:
     plan:
       - aggregate:
         - get: pack-repo
-          resource: pack-repo-released
+          resource: pack-repo
         - get: pipeline-repo
         - get: packs-build-image
           passed: [lifecycle-build]
